@@ -9,12 +9,18 @@ import { SubTaskService } from "../services/SubTaskService";
 import { SubTaskRepository } from "../repositories/SubTaskRepository";
 import { Status, SubTask } from "../../entities/SubTask";
 import CreateSubTaskRequest from "../requests/subtask/CreateSubTaskRequest";
+import CustomError from "../../models/CustomError";
+import { ErrorMessages } from "../../constants/ErrorMessages";
 @Service()
 export class SubTaskServiceImpl implements SubTaskService {
   protected subTaskRepository = getCustomRepository(SubTaskRepository);
   protected toDoRepository = getCustomRepository(ToDoRepository);
 
   async createSubTask(request: CreateSubTaskRequest): Promise<Result> {
+    let todo = await this.toDoRepository.findOneOrFail(request.todo_id);
+    if(todo.status === Status.COMPLETED) throw  new CustomError( 403 , ErrorMessages.COMPLETED_RESTRICTED);
+
+
     let subTask = new SubTask();
     subTask.title = request.title;
     let toDo = await this.toDoRepository.findOneOrFail(request.todo_id);

@@ -1,4 +1,4 @@
-import { ToDo } from "./../../entities/ToDo";
+import { Status, ToDo } from "./../../entities/ToDo";
 import { getCustomRepository } from "typeorm";
 import { ToDoService } from "./../services/ToDoService";
 import Container, { Service } from "typedi";
@@ -8,6 +8,7 @@ import { ToDoRepository } from "../repositories/ToDoRepository";
 import UpdateToDoRequest from "../requests/todo/UpdateToDoRequest";
 import CustomError from "../../models/CustomError";
 import GetByIdRequest from "../requests/todo/GetByIdRequest";
+import { ErrorMessages } from "../../constants/ErrorMessages";
 @Service()
 export class ToDoServiceImpl implements ToDoService {
 
@@ -21,7 +22,12 @@ export class ToDoServiceImpl implements ToDoService {
   }
 
   async updateToDo(request: UpdateToDoRequest): Promise<Result> {
-    let todo = await this.toDoRepository.findOneOrFail(request.id);
+    let todo = await this.toDoRepository.findOneOrFail(request.id, { relations: ["subTasks"] });
+    if(todo.status === Status.COMPLETED) throw  new CustomError( 403 , ErrorMessages.COMPLETED_RESTRICTED);
+    if(todo.status === Status.PENDING && request.status === Status.PENDING) throw  new CustomError( 403 , ErrorMessages.ALREADY_PENDING);
+    todo.subTasks.forEach((subTask) => {
+      subTask.status = Status.COMPLETED;
+    });
     todo.status = request.status;
     let res = await this.toDoRepository.save(todo);
     return Result.succesful(res);

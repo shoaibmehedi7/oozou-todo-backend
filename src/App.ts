@@ -9,7 +9,7 @@ import { routingControllersToSpec } from "routing-controllers-openapi";
 import * as swaggerUiExpress from "swagger-ui-express";
 import config from "./config/index";
 import HealthCheckController from "./server/controllers/HealthCheckController";
-// import * as serviceAccount from "./sk.json"
+import ToDoController from "./server/controllers/ToDoController";
 
 export default class App {
   public app: express.Application;
@@ -24,7 +24,7 @@ export default class App {
       classTransformer: true,
       cors: true,
       validation: { skipMissingProperties: true },
-      controllers: [HealthCheckController],
+      controllers: [HealthCheckController,ToDoController],
       middlewares: [CustomErrorHandler]
     };
     const schemas = validationMetadatasToSchemas({

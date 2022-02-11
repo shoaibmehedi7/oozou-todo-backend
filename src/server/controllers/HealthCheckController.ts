@@ -2,7 +2,7 @@ import {JsonController, Get, Res} from "routing-controllers";
 import { Response} from 'express';
 import "reflect-metadata";
 
-@JsonController()
+@JsonController('/healthcheck')
 export default class HealthCheckController {
 
 

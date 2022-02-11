@@ -18,7 +18,7 @@ export class SubTaskServiceImpl implements SubTaskService {
 
   async createSubTask(request: CreateSubTaskRequest): Promise<Result> {
     let todo = await this.toDoRepository.findOneOrFail(request.todo_id);
-    if(todo.status === Status.COMPLETED) throw  new CustomError( 403 , ErrorMessages.COMPLETED_RESTRICTED);
+    if(todo.status === Status.COMPLETED) throw  new CustomError( 403 , ErrorMessages.COMPLETED_TODO_SUBTASK_RESTRICTED);
 
 
     let subTask = new SubTask();

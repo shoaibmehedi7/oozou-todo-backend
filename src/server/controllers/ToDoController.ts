@@ -8,6 +8,7 @@ import Container from "typedi";
 import { ToDoServiceImpl } from "../service-impl/ToDoServiceImpl";
 import { OpenAPI } from "routing-controllers-openapi";
 import UpdateToDoRequest from "../requests/todo/UpdateToDoRequest";
+import GetByIdRequest from "../requests/todo/GetByIdRequest";
 
 @JsonController('/todo')
 export default class ToDoController {
@@ -25,6 +26,12 @@ export default class ToDoController {
   @Post("/create/")
   async create(@Body({ required: true }) request: CreateToDoRequest, @Res() response: Response) {
     const result = await this.todoService.createToDo(request);
+    return response.json(new SuccessResponse(result.getValue()));
+  }
+
+  @Post("/getToDoWithSubTasks/")
+  async getToDoWithSubTasks(@Body({ required: true }) request: GetByIdRequest, @Res() response: Response) {
+    const result = await this.todoService.getToDoWithSubTasks(request);
     return response.json(new SuccessResponse(result.getValue()));
   }
 

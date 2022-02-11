@@ -18,7 +18,7 @@ export class SubTask extends BaseEntity {
   })
   status: string;
 
-  @ManyToOne((type) => ToDo, (toDo) => toDo.subTask, {
+  @ManyToOne((type) => ToDo, (toDo) => toDo.subTasks, {
     eager: false,
     onDelete: "CASCADE",
   })

@@ -10,6 +10,7 @@ import * as swaggerUiExpress from "swagger-ui-express";
 import config from "./config/index";
 import HealthCheckController from "./server/controllers/HealthCheckController";
 import ToDoController from "./server/controllers/ToDoController";
+import SubTaskController from "./server/controllers/SubTaskController";
 
 export default class App {
   public app: express.Application;
@@ -24,7 +25,7 @@ export default class App {
       classTransformer: true,
       cors: true,
       validation: { skipMissingProperties: true },
-      controllers: [HealthCheckController,ToDoController],
+      controllers: [HealthCheckController,ToDoController,SubTaskController],
       middlewares: [CustomErrorHandler]
     };
     const schemas = validationMetadatasToSchemas({

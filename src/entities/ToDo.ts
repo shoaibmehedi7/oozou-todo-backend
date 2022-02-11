@@ -22,5 +22,5 @@ export class ToDo extends BaseEntity {
     eager: false,
     cascade: true,
   })
-  subTask: SubTask[];
+  subTasks: SubTask[];
 }

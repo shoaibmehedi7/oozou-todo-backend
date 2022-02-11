@@ -7,6 +7,7 @@ import CreateToDoRequest from "../requests/todo/CreateToDoRequest";
 import { ToDoRepository } from "../repositories/ToDoRepository";
 import UpdateToDoRequest from "../requests/todo/UpdateToDoRequest";
 import CustomError from "../../models/CustomError";
+import GetByIdRequest from "../requests/todo/GetByIdRequest";
 @Service()
 export class ToDoServiceImpl implements ToDoService {
 
@@ -24,6 +25,12 @@ export class ToDoServiceImpl implements ToDoService {
     todo.status = request.status;
     let res = await this.toDoRepository.save(todo);
     return Result.succesful(res);
+  }
+
+
+  async getToDoWithSubTasks(request: GetByIdRequest): Promise<Result> {
+    let response = await this.toDoRepository.findOneOrFail(request.id, { relations: ["subTasks"] });
+    return Result.succesful(response);
   }
 
   async getToDos(): Promise<Result> {

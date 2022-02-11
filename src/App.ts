@@ -46,7 +46,7 @@ export default class App {
       },
       info: {
         description: "Generated with `routing-controllers-openapi`",
-        title: "OOZOU TODO API",
+        title: "TODO API",
         version: "1.0.0",
       },
     });

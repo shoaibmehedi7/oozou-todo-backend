@@ -5,5 +5,5 @@ export default class CreateSubTaskRequest {
     title: string;
 
     @IsNotEmpty({ message: "Title Can't be Empty" })
-    todo_id: string;
+    todo_id: number;
 }

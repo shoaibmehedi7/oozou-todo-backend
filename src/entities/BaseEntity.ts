@@ -10,12 +10,7 @@ export class BaseEntity {
     id: number;
 
     @CreateDateColumn()
-    createdDate: Date;
-
-    @UpdateDateColumn()
-    updatedDate: Date;
-
-
+    created_at: Date;
 }
 
 

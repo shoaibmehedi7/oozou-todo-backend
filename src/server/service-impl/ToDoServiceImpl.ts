@@ -33,14 +33,8 @@ export class ToDoServiceImpl implements ToDoService {
     return Result.succesful(res);
   }
 
-
-  async getToDoWithSubTasks(request: GetByIdRequest): Promise<Result> {
-    let response = await this.toDoRepository.findOneOrFail(request.id, { relations: ["subTasks"] });
-    return Result.succesful(response);
-  }
-
   async getToDos(): Promise<Result> {
-    let response = await this.toDoRepository.find();
+    let response = await this.toDoRepository.find({relations: ["subTasks"],order: {created_at: "DESC"}});
     return Result.succesful(response);
   }
 }

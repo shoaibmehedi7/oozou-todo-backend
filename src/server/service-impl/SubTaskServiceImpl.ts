@@ -11,6 +11,7 @@ import { Status, SubTask } from "../../entities/SubTask";
 import CreateSubTaskRequest from "../requests/subtask/CreateSubTaskRequest";
 import CustomError from "../../models/CustomError";
 import { ErrorMessages } from "../../constants/ErrorMessages";
+import GetByIdRequest from "../requests/todo/GetByIdRequest";
 @Service()
 export class SubTaskServiceImpl implements SubTaskService {
   protected subTaskRepository = getCustomRepository(SubTaskRepository);
@@ -70,5 +71,9 @@ export class SubTaskServiceImpl implements SubTaskService {
     console.log(counts);
 
     return Result.succesful(res);
+  }
+  async getSubTasksByToDo(request:GetByIdRequest): Promise<Result> {
+    let response = await this.subTaskRepository.find({where:{toDo:request.id}});
+    return Result.succesful(response);
   }
 }

@@ -29,12 +29,6 @@ export default class ToDoController {
     return response.json(new SuccessResponse(result.getValue()));
   }
 
-  @Post("/getToDoWithSubTasks/")
-  async getToDoWithSubTasks(@Body({ required: true }) request: GetByIdRequest, @Res() response: Response) {
-    const result = await this.todoService.getToDoWithSubTasks(request);
-    return response.json(new SuccessResponse(result.getValue()));
-  }
-
   @Post("/update/")
   async update(@Body({ required: true }) request: UpdateToDoRequest, @Res() response: Response) {
     const result = await this.todoService.updateToDo(request);

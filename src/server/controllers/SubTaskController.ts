@@ -24,6 +24,12 @@ export default class SubTaskController {
     return response.json(new SuccessResponse(result.getValue()));
   }
 
+  @Post("/getSubTasksByToDo/")
+  async getSubTasksByToDo(@Body({ required: true }) request: GetByIdRequest, @Res() response: Response) {
+    const result = await this.subTaskService.getSubTasksByToDo(request);
+    return response.json(new SuccessResponse(result.getValue()));
+  }
+
   @Post("/update/")
   async update(@Body({ required: true }) request: UpdateSubTaskRequest, @Res() response: Response) {
     const result = await this.subTaskService.updateSubTask(request);

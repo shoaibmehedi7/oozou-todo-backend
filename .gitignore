@@ -8,5 +8,4 @@ node_modules/
 .idea/**/shelf
 .idea/httpRequests
 .idea
-.env
 package-lock.json
